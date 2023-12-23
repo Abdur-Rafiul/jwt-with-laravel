@@ -7,7 +7,6 @@
 
 ## Setup JWT with Laravel
 
-- Ezoic
 - User Register API
 - Login API
 - Profile API
@@ -22,13 +21,14 @@ composer require tymon/jwt-auth
 ## Step 2
 Open app.php file from /config folder.
 
-Search for “providers“, add this line of code into it.
+- Search for “providers“, add this line of code into it.
 
 'providers' => ServiceProvider::defaultProviders()->merge([
     //...
     Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 ])->toArray(),
-Search for “aliases“, add these lines of code into it.
+
+- Search for “aliases“, add these lines of code into it.
 
 'aliases' => Facade::defaultAliases()->merge([
    //...
@@ -46,7 +46,6 @@ It will copy a file jwt.php inside /config folder.
 ## Step 4
 Run migration
 
-Ezoic
 php artisan migrate
 It will migrate all pending migrations of application.
 
@@ -59,7 +58,7 @@ It updates .env file with jwt secret key
 ## Step 6
 Open auth.php file from /config folder.
 
-Search for “guards“. Add these lines of code into it,
+- Search for “guards“. Add these lines of code into it,
 
 'guards' => [
     //...
@@ -73,17 +72,21 @@ Search for “guards“. Add these lines of code into it,
 Update User.php (User model class file).
 
 Open User.php file from /app/Models folder.
-Ezoic
-
+<p>
 <?php
 ​
 namespace App\Models;
 ​
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
 use Illuminate\Notifications\Notifiable;
+
 use Laravel\Sanctum\HasApiTokens;
+
 use Tymon\JWTAuth\Contracts\JWTSubject;
 ​
 class User extends Authenticatable implements JWTSubject
@@ -97,7 +100,9 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name',
+
         'email',
+
         'password',
     ];
 ​
@@ -135,6 +140,7 @@ class User extends Authenticatable implements JWTSubject
 Successfully, you have setup JWT auth package into application.
 
 Now, you have a middleware which you can use to protect api routes i.e “jwt”
+</p>
 
 ## Step 8
 API Controller Settings
