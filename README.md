@@ -90,7 +90,9 @@ use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 ​
 class User extends Authenticatable implements JWTSubject
+
 {
+
     use HasApiTokens, HasFactory, Notifiable;
 ​
     /**
@@ -98,7 +100,9 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
+
         'name',
 
         'email',
@@ -111,8 +115,11 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array<int, string>
      */
+
     protected $hidden = [
+
         'password',
+
         'remember_token',
     ];
 ​
@@ -122,24 +129,33 @@ class User extends Authenticatable implements JWTSubject
      * @var array<string, string>
      */
     protected $casts = [
+
         'email_verified_at' => 'datetime',
+
         'password' => 'hashed',
     ]; 
 ​
     public function getJWTIdentifier()
+
     {
+
       return $this->getKey();
+
     }
 ​
     public function getJWTCustomClaims()
+
     {
+
       return [];
+
     }
 }
 ​
 Successfully, you have setup JWT auth package into application.
 
 Now, you have a middleware which you can use to protect api routes i.e “jwt”
+
 </p>
 
 ## Step 8
