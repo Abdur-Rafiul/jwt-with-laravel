@@ -172,6 +172,7 @@ It will create a file named ApiController.php inside /app/Http/Controllers folde
 Read More: How To Upload File with Progress Bar in Laravel 10 Tutorial
 
 Open file and write this complete code into it,
+<p>
 
 <?php
 ​
