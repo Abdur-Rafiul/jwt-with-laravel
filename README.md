@@ -73,7 +73,7 @@ Update User.php (User model class file).
 
 Open User.php file from /app/Models folder.
 <p>
-<?php
+
 ​
 namespace App\Models;
 ​
@@ -174,7 +174,7 @@ Read More: How To Upload File with Progress Bar in Laravel 10 Tutorial
 Open file and write this complete code into it,
 <p>
 
-<?php
+
 ​
 namespace App\Http\Controllers\Api;
  
@@ -353,7 +353,7 @@ Open the newly created JwtMiddleware.php file and update the handle method to in
 
 can use the JWTAuth facade for this purpose.
 
-<?php
+
 
 namespace App\Http\Middleware;
 
@@ -381,9 +381,9 @@ class JwtMiddleware
     }
 }
 
-Register the Middleware:
+Register the Middleware: </br>
 
-Open the app/Http/Kernel.php file and add your middleware to the $routeMiddleware array:
+Open the app/Http/Kernel.php file and add your middleware to the $routeMiddleware array: </br>
 
 protected $routeMiddleware = [
 
@@ -391,10 +391,10 @@ protected $routeMiddleware = [
 
     'jwt' => \App\Http\Middleware\JwtMiddleware::class,
 
-];
+]; </br>
 
-Update Routes:
+Update Routes:</br>
 
-Change the middleware in your routes file to use the newly created jwt middleware:
+Change the middleware in your routes file to use the newly created jwt middleware: </br>
 
 </p>
