@@ -159,10 +159,13 @@ Now, you have a middleware which you can use to protect api routes i.e “jwt”
 </p>
 
 ## Step 8
+<P>
 API Controller Settings
+
 Run this command to create API controller class,
 
 php artisan make:controller Api/ApiController
+
 It will create a file named ApiController.php inside /app/Http/Controllers folder.
 
 Read More: How To Upload File with Progress Bar in Laravel 10 Tutorial
@@ -174,85 +177,117 @@ Open file and write this complete code into it,
 namespace App\Http\Controllers\Api;
  
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
+
 use App\Models\User;
+
 use Illuminate\Support\Facades\Hash;
+
 use Tymon\JWTAuth\Facades\JWTAuth;
 ​
 class ApiController extends Controller
 {
     // User Register (POST, formdata)
+
     public function register(Request $request){
 
         // User Model
+
         User::create([
+
             "name" => $request->name,
+
             "email" => $request->email,
+
             "password" => Hash::make($request->password)
         ]);
 ​
         // Response
+
         return response()->json([
+
             "status" => true,
+
             "message" => "User registered successfully"
         ]);
     }
 ​
     // User Login (POST, formdata)
+
     public function login(Request $request){
 ​
         // JWTAuth
+
         $token = JWTAuth::attempt([
+
             "email" => $request->email,
+
             "password" => $request->password
         ]);
 ​
         if(!empty($token)){
 ​
             return response()->json([
+
                 "status" => true,
+
                 "message" => "User logged in succcessfully",
+
                 "token" => $token
             ]);
         }
 ​
         return response()->json([
+
             "status" => false,
+
             "message" => "Invalid details"
         ]);
     }
 ​
     // User Profile (GET)
+
     public function profile(){
 ​
         $userdata = auth()->user();
 ​
         return response()->json([
+
             "status" => true,
+
             "message" => "Profile data",
+
             "data" => $userdata
         ]);
     } 
 ​
     // To generate refresh token value
+
     public function refreshToken(){
         
         $newToken = auth()->refresh();
 ​
         return response()->json([
+
             "status" => true,
+
             "message" => "New access token",
+
             "token" => $newToken
         ]);
     }
 ​
     // User Logout (GET)
+
     public function logout(){
         
         auth()->logout();
 ​
         return response()->json([
+
             "status" => true,
+
             "message" => "User logged out successfully"
         ]);
     }
@@ -266,14 +301,19 @@ Open api.php file from /routes folder. Add these routes into it,
 use App\Http\Controllers\Api\ApiController;
 ​
 Route::post("register", [ApiController::class, "register"]);
+
 Route::post("login", [ApiController::class, "login"]);
 ​
 Route::group([
+
     "middleware" => ["jwt"]
+
 ], function(){
 ​
     Route::get("profile", [ApiController::class, "profile"]);
+
     Route::get("refresh", [ApiController::class, "refreshToken"]);
+
     Route::get("logout", [ApiController::class, "logout"]);
 });
 
@@ -285,17 +325,21 @@ Create a new middleware using the following command in your terminal:
 
 
 php artisan make:middleware JwtMiddleware
+
 This will create a new middleware file in the app/Http/Middleware directory.
 
 Update the Middleware Logic:
 
-Open the newly created JwtMiddleware.php file and update the handle method to include your JWT validation logic. You can use the JWTAuth facade for this purpose.
+Open the newly created JwtMiddleware.php file and update the handle method to include your JWT validation logic. You
+
+can use the JWTAuth facade for this purpose.
 
 <?php
 
 namespace App\Http\Middleware;
 
 use Closure;
+
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JwtMiddleware
@@ -303,22 +347,30 @@ class JwtMiddleware
     public function handle($request, Closure $next)
     {
         try {
+
             $user = JWTAuth::parseToken()->authenticate();
+
         } catch (\Exception $e) {
+
             return response()->json(['status' => false, 'message' => 'Unauthorized.'], 401);
         }
 
         return $next($request);
     }
 }
+
 Register the Middleware:
 
 Open the app/Http/Kernel.php file and add your middleware to the $routeMiddleware array:
-Copy code
+
 protected $routeMiddleware = [
+
     // ...
+
     'jwt' => \App\Http\Middleware\JwtMiddleware::class,
+
 ];
+
 Update Routes:
 
 Change the middleware in your routes file to use the newly created jwt middleware:
