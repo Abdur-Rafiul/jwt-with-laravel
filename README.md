@@ -159,7 +159,8 @@ Now, you have a middleware which you can use to protect api routes i.e “jwt”
 </p>
 
 ## Step 8
-<P>
+<p>
+
 API Controller Settings
 
 Run this command to create API controller class,
@@ -215,7 +216,9 @@ class ApiController extends Controller
 ​
     // User Login (POST, formdata)
 
-    public function login(Request $request){
+    public function login(Request $request)
+
+    {
 ​
         // JWTAuth
 
@@ -224,6 +227,7 @@ class ApiController extends Controller
             "email" => $request->email,
 
             "password" => $request->password
+
         ]);
 ​
         if(!empty($token)){
@@ -235,6 +239,7 @@ class ApiController extends Controller
                 "message" => "User logged in succcessfully",
 
                 "token" => $token
+
             ]);
         }
 ​
@@ -243,6 +248,7 @@ class ApiController extends Controller
             "status" => false,
 
             "message" => "Invalid details"
+
         ]);
     }
 ​
@@ -259,12 +265,15 @@ class ApiController extends Controller
             "message" => "Profile data",
 
             "data" => $userdata
+
         ]);
     } 
 ​
     // To generate refresh token value
 
-    public function refreshToken(){
+    public function refreshToken()
+
+    {
         
         $newToken = auth()->refresh();
 ​
@@ -280,7 +289,9 @@ class ApiController extends Controller
 ​
     // User Logout (GET)
 
-    public function logout(){
+    public function logout()
+
+    {
         
         auth()->logout();
 ​
@@ -292,12 +303,15 @@ class ApiController extends Controller
         ]);
     }
 }
-​
+​</p>
+
 ## Step 9
+<p>
 
 Open api.php file from /routes folder. Add these routes into it,
 
 //...
+
 use App\Http\Controllers\Api\ApiController;
 ​
 Route::post("register", [ApiController::class, "register"]);
@@ -317,7 +331,11 @@ Route::group([
     Route::get("logout", [ApiController::class, "logout"]);
 });
 
+</p>
+
 ## Step 10
+
+<p>
 
 Create a Custom Middleware:
 
@@ -350,7 +368,10 @@ class JwtMiddleware
 
             $user = JWTAuth::parseToken()->authenticate();
 
-        } catch (\Exception $e) {
+        }
+         catch (\Exception $e) 
+
+         {
 
             return response()->json(['status' => false, 'message' => 'Unauthorized.'], 401);
         }
@@ -374,3 +395,5 @@ protected $routeMiddleware = [
 Update Routes:
 
 Change the middleware in your routes file to use the newly created jwt middleware:
+
+</p>
